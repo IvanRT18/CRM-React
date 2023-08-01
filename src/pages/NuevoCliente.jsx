@@ -1,12 +1,35 @@
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useActionData, useNavigate } from "react-router-dom";
 import Formulario from "../components/Formulario";
+import Error from "../components/Error";
 
-export function action() {
-  console.log("Formulario envaido");
+export async function action({ request }) {
+  const FormData = await request.formData();
+
+  // const entries2 = [...FormData];
+  const datos = Object.fromEntries(FormData);
+
+  const errores = [];
+  //Validación
+  if (Object.values(datos).includes("")) {
+    errores.push("Hay uno o más campos vacíos");
+  }
+
+  let regex = new RegExp(
+    "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+  );
+
+  if (!regex.test(FormData.get("email"))) {
+    errores.push("Email no es válido");
+  }
+
+  if (Object.keys(errores).length) {
+    return errores;
+  }
   return { ok: true };
 }
 
 const NuevoCliente = () => {
+  const errores = useActionData();
   const navigate = useNavigate();
   return (
     <>
@@ -24,8 +47,11 @@ const NuevoCliente = () => {
         </button>
       </div>
 
+      {errores?.length > 0 &&
+        errores.map((error, index) => <Error key={index}>{error}</Error>)}
+
       <div className="bg-white shadow rounded-md md:w-3/4 mx-auto px-5 py-10 mt-10">
-        <Form method="post">
+        <Form method="post" noValidate>
           <Formulario />
 
           <input

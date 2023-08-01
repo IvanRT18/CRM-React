@@ -1,44 +1,9 @@
 import { useLoaderData } from "react-router-dom";
 import Cliente from "../components/Cliente";
+import { obtenerCliente } from "../data/clientes";
 
 export function loader() {
-  const clientes = [
-    {
-      id: 1,
-      nombre: "Juan",
-      telefono: 102013313,
-      email: "juan@outlook.com",
-      empresa: "BMW",
-    },
-    {
-      id: 2,
-      nombre: "Karen",
-      telefono: 138198313,
-      email: "karen@outlook.com",
-      empresa: "General Motors",
-    },
-    {
-      id: 3,
-      nombre: "Josue",
-      telefono: 31983913,
-      email: "josue@outlook.com",
-      empresa: "Google",
-    },
-    {
-      id: 4,
-      nombre: "Miguel",
-      telefono: 319381983,
-      email: "miguel@outlook.com",
-      empresa: "Microsoft",
-    },
-    {
-      id: 5,
-      nombre: "Pedro",
-      telefono: 1398198938,
-      email: "pedro@outlook.com",
-      empresa: "Facebook",
-    },
-  ];
+  const clientes = obtenerCliente();
   return clientes;
 }
 
