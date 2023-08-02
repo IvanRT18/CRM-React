@@ -1,6 +1,7 @@
-import { Form, useActionData, useNavigate } from "react-router-dom";
+import { Form, redirect, useActionData, useNavigate } from "react-router-dom";
 import Formulario from "../components/Formulario";
 import Error from "../components/Error";
+import { agregaCliente } from "../data/clientes";
 
 export async function action({ request }) {
   const FormData = await request.formData();
@@ -14,18 +15,24 @@ export async function action({ request }) {
     errores.push("Hay uno o más campos vacíos");
   }
 
+  //Validación del email
   let regex = new RegExp(
     "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
   );
-
   if (!regex.test(FormData.get("email"))) {
     errores.push("Email no es válido");
   }
 
+  //Retorno si hay errores
   if (Object.keys(errores).length) {
     return errores;
   }
-  return { ok: true };
+
+  //Agrega cliente si no hay errores
+  await agregaCliente(datos);
+
+  //Despues de agregar al cliente redireccionamos al usuario a la pagina principal
+  return redirect("/");
 }
 
 const NuevoCliente = () => {

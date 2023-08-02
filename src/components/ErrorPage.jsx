@@ -8,7 +8,7 @@ const ErrorPage = () => {
         CRM Pacientes
       </h1>
       <p className="text-center text-2xl">Hubo un error</p>
-      <p className="text-center">{error.message}</p>
+      <p className="text-center">{error.statusText || error.message}</p>
     </div>
   );
 };
