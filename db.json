@@ -1,18 +1,12 @@
 {
   "clientes": [
     {
-      "id": 1,
-      "nombre": "Juan",
-      "telefono": 102013313,
-      "email": "juan@outlook.com",
-      "empresa": "BMW"
-    },
-    {
-      "id": 2,
-      "nombre": "Karen",
-      "telefono": 138198313,
+      "nombre": "Karen actualizado",
+      "empresa": "General Motors",
       "email": "karen@outlook.com",
-      "empresa": "General Motors"
+      "telefono": "138198313",
+      "notas": "asdf",
+      "id": 2
     },
     {
       "id": 3,
